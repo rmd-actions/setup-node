@@ -64,7 +64,7 @@ If `check-latest` is set to `true`, the action first checks if the cached versio
 
 ```yaml
 steps:
-- uses: actions/checkout@v5
+- uses: actions/checkout@v6
 - uses: actions/setup-node@v6
   with:
     node-version: '24'
@@ -82,7 +82,7 @@ See [supported version syntax](https://github.com/actions/setup-node#supported-v
 
 ```yaml
 steps:
-- uses: actions/checkout@v5
+- uses: actions/checkout@v6
 - uses: actions/setup-node@v6
   with:
     node-version-file: '.nvmrc'
@@ -90,20 +90,30 @@ steps:
 - run: npm test
 ```
 
-When using the `package.json` input, the action will look for `volta.node` first. If `volta.node` isn't defined, then it will look for `engines.node`.
+When using the `package.json` input, the action will look in the following fields for a specified Node version:
+1. It checks `volta.node` first.
+2. Then it checks `devEngines.runtime` for an entry with `"name": "node"`.
+3. Then it will look for `engines.node`.
+4. Otherwise it tries to resolve the file defined by [`volta.extends`](https://docs.volta.sh/advanced/workspaces)
+   and look for `volta.node`, `devEngines.runtime`, or `engines.node` recursively.
+
 
 ```json
 {
   "engines": {
-    "node": ">=16.0.0"
+    "node": "^22 || ^24"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.3"
+    }
   },
   "volta": {
-    "node": "16.0.0"
+    "node": "24.11.1"
   }
 }
 ```
-
-Otherwise, when [`volta.extends`](https://docs.volta.sh/advanced/workspaces) is defined, then it will resolve the corresponding file and look for `volta.node` or `engines.node` recursively.
 
 ## Architecture
 
@@ -116,7 +126,7 @@ jobs:
     runs-on: windows-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
@@ -137,7 +147,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24.0.0-v8-canary' # it will install the latest v8 canary release for node 24.0.0
@@ -152,7 +162,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24-v8-canary' # it will install the latest v8 canary release for node 24
@@ -168,7 +178,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 'v24.0.0-v8-canary2025030537242e55ac'
@@ -188,7 +198,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24-nightly' # it will install the latest nightly release for node 24
@@ -204,7 +214,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24.0.0-nightly' # it will install the latest nightly release for node 24.0.0
@@ -220,7 +230,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24.0.0-nightly202505066102159fa1'
@@ -238,7 +248,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: '24.0.0-rc.4'
@@ -256,7 +266,7 @@ Yarn caching handles both Yarn Classic (v1) and Yarn Berry (v2, v3, v4+).
 
 ```yaml
 steps:
-- uses: actions/checkout@v5
+- uses: actions/checkout@v6
 - uses: actions/setup-node@v6
   with:
     node-version: '24'
@@ -275,7 +285,7 @@ steps:
 # NOTE: pnpm caching support requires pnpm version >= 6.10.0
 
 steps:
-- uses: actions/checkout@v5
+- uses: actions/checkout@v6
 - uses: pnpm/action-setup@v4
   with:
     version: 10
@@ -294,7 +304,7 @@ steps:
 **Using wildcard patterns to cache dependencies**
 ```yaml
 steps:
-- uses: actions/checkout@v5
+- uses: actions/checkout@v6
 - uses: actions/setup-node@v6
   with:
     node-version: '24'
@@ -307,7 +317,7 @@ steps:
 **Using a list of file paths to cache dependencies**
 ```yaml
 steps:
-- uses: actions/checkout@v5
+- uses: actions/checkout@v6
 - uses: actions/setup-node@v6
   with:
     node-version: '24'
@@ -327,10 +337,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       # Restore Node.js modules cache (restore-only)
       - name: Restore Node modules cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         id: cache-node-modules
         with:
           path: ~/.npm
@@ -373,7 +383,7 @@ jobs:
             architecture: x86
     name: Node ${{ matrix.node_version }} - ${{ matrix.architecture }} on ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Setup node
         uses: actions/setup-node@v6
         with:
@@ -386,7 +396,7 @@ jobs:
 ## Publish to npmjs and GPR with npm
 ```yaml
 steps:
-- uses: actions/checkout@v5
+- uses: actions/checkout@v6
 - uses: actions/setup-node@v6
   with:
     node-version: '24.x'
@@ -406,7 +416,7 @@ steps:
 ## Publish to npmjs and GPR with yarn
 ```yaml
 steps:
-- uses: actions/checkout@v5
+- uses: actions/checkout@v6
 - uses: actions/setup-node@v6
   with:
     node-version: '24.x'
@@ -426,7 +436,7 @@ steps:
 ## Use private packages
 ```yaml
 steps:
-- uses: actions/checkout@v5
+- uses: actions/checkout@v6
 - uses: actions/setup-node@v6
   with:
     node-version: '24.x'
@@ -446,7 +456,7 @@ Below you can find a sample "Setup .yarnrc.yml" step, that is going to allow you
 
 ```yaml
 steps:
-- uses: actions/checkout@v5
+- uses: actions/checkout@v6
 - uses: actions/setup-node@v6
   with:
     node-version: '24.x'
@@ -470,7 +480,7 @@ Please refer to the [Ensuring workflow access to your package - Configuring a pa
 It is possible to use a private mirror hosting Node.js binaries. This mirror must be a full mirror of the official Node.js distribution.
 The mirror URL can be set using the `mirror` input.
 It is possible to specify a token to authenticate with the mirror using the `mirror-token` input.
-The token will be passed as a bearer token in the `Authorization` header.
+The token will be passed in the `Authorization` header.
 
 ```yaml
 - uses: actions/setup-node@v6
