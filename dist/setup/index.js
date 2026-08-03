@@ -79822,7 +79822,9 @@ class OfficialBuilds extends base_distribution_1.default {
             const versionInfo = await this.getInfoFromManifest(this.nodeInfo.versionSpec, this.nodeInfo.stable, osArch, manifest);
             if (versionInfo) {
                 core.info(`Acquiring ${versionInfo.resolvedVersion} - ${versionInfo.arch} from ${versionInfo.downloadUrl}`);
-                downloadPath = await tc.downloadTool(versionInfo.downloadUrl, undefined, this.nodeInfo.mirror ? this.nodeInfo.mirrorToken : this.nodeInfo.auth);
+                downloadPath = await tc.downloadTool(versionInfo.downloadUrl, undefined, this.nodeInfo.mirror && this.nodeInfo.mirrorToken
+                    ? this.nodeInfo.mirrorToken
+                    : this.nodeInfo.auth);
                 if (downloadPath) {
                     toolPath = await this.extractArchive(downloadPath, versionInfo, false);
                 }
@@ -79893,7 +79895,9 @@ class OfficialBuilds extends base_distribution_1.default {
     }
     getManifest() {
         core.debug('Getting manifest from actions/node-versions@main');
-        return tc.getManifestFromRepo('actions', 'node-versions', this.nodeInfo.mirror ? this.nodeInfo.mirrorToken : this.nodeInfo.auth, 'main');
+        return tc.getManifestFromRepo('actions', 'node-versions', this.nodeInfo.mirror && this.nodeInfo.mirrorToken
+            ? this.nodeInfo.mirrorToken
+            : this.nodeInfo.auth, 'main');
     }
     resolveLtsAliasFromManifest(versionSpec, stable, manifest) {
         const alias = versionSpec.split('lts/')[1]?.toLowerCase();
