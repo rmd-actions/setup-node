@@ -45,8 +45,8 @@ To run without a lockfile:
 
 ```yaml
 steps:
-- uses: actions/checkout@v6
-- uses: actions/setup-node@v6
+- uses: actions/checkout@v7
+- uses: actions/setup-node@v7
   with:
     node-version: '24'
     package-manager-cache: false # Explicitly disable caching if you don't have a lockfile
@@ -64,8 +64,8 @@ If `check-latest` is set to `true`, the action first checks if the cached versio
 
 ```yaml
 steps:
-- uses: actions/checkout@v6
-- uses: actions/setup-node@v6
+- uses: actions/checkout@v7
+- uses: actions/setup-node@v7
   with:
     node-version: '24'
     check-latest: true
@@ -83,8 +83,8 @@ See [supported version syntax](https://github.com/actions/setup-node#supported-v
 
 ```yaml
 steps:
-- uses: actions/checkout@v6
-- uses: actions/setup-node@v6
+- uses: actions/checkout@v7
+- uses: actions/setup-node@v7
   with:
     node-version-file: '.nvmrc'
     package-manager-cache: false # Disable automatic npm caching if not required
@@ -128,8 +128,8 @@ jobs:
     runs-on: windows-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           architecture: 'x64' # optional, x64 or x86. If not specified, x64 will be used by default
@@ -150,8 +150,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24.0.0-v8-canary' # it will install the latest v8 canary release for node 24.0.0
           package-manager-cache: false # Disable automatic npm caching if not required
@@ -166,8 +166,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24-v8-canary' # it will install the latest v8 canary release for node 24
           package-manager-cache: false # Disable automatic npm caching if not required
@@ -183,8 +183,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 'v24.0.0-v8-canary2025030537242e55ac'
           package-manager-cache: false # Disable automatic npm caching if not required
@@ -204,8 +204,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24-nightly' # it will install the latest nightly release for node 24
           package-manager-cache: false # Disable automatic npm caching if not required
@@ -221,8 +221,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24.0.0-nightly' # it will install the latest nightly release for node 24.0.0
           package-manager-cache: false # Disable automatic npm caching if not required
@@ -238,8 +238,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24.0.0-nightly202505066102159fa1'
           package-manager-cache: false # Disable automatic npm caching if not required
@@ -257,8 +257,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Node sample
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '24.0.0-rc.4'
           package-manager-cache: false # Disable automatic npm caching if not required
@@ -276,8 +276,8 @@ Yarn caching handles both Yarn Classic (v1) and Yarn Berry (v2, v3, v4+).
 
 ```yaml
 steps:
-- uses: actions/checkout@v6
-- uses: actions/setup-node@v6
+- uses: actions/checkout@v7
+- uses: actions/setup-node@v7
   with:
     node-version: '24'
     cache: 'yarn'
@@ -295,11 +295,11 @@ steps:
 # NOTE: pnpm caching support requires pnpm version >= 6.10.0
 
 steps:
-- uses: actions/checkout@v6
-- uses: pnpm/action-setup@v4
+- uses: actions/checkout@v7
+- uses: pnpm/action-setup@v6
   with:
     version: 10
-- uses: actions/setup-node@v6
+- uses: actions/setup-node@v7
   with:
     node-version: '24'
     cache: 'pnpm'
@@ -314,8 +314,8 @@ steps:
 **Using wildcard patterns to cache dependencies**
 ```yaml
 steps:
-- uses: actions/checkout@v6
-- uses: actions/setup-node@v6
+- uses: actions/checkout@v7
+- uses: actions/setup-node@v7
   with:
     node-version: '24'
     cache: 'npm'
@@ -327,8 +327,8 @@ steps:
 **Using a list of file paths to cache dependencies**
 ```yaml
 steps:
-- uses: actions/checkout@v6
-- uses: actions/setup-node@v6
+- uses: actions/checkout@v7
+- uses: actions/setup-node@v7
   with:
     node-version: '24'
     cache: 'npm'
@@ -345,13 +345,13 @@ You can restore caches without saving new entries, which helps reduce cache writ
 
 ```yaml
 steps:
-- uses: actions/checkout@v6
+- uses: actions/checkout@v7
 # - uses: pnpm/action-setup@v6 
 #   with:
 #     version: 10
 
 - name: Setup Node.js
-  uses: actions/setup-node@v6
+  uses: actions/setup-node@v7
   with:
     node-version: '24'
     package-manager-cache: false # Disable automatic npm caching if not required
@@ -397,9 +397,9 @@ jobs:
           - macos-latest
           - windows-latest
         node_version:
-          - 20
           - 22
           - 24
+          - 26
         architecture:
           - x64
         # an extra windows-x86 run:
@@ -409,9 +409,9 @@ jobs:
             architecture: x86
     name: Node ${{ matrix.node_version }} - ${{ matrix.architecture }} on ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node_version }}
           architecture: ${{ matrix.architecture }}
@@ -423,8 +423,8 @@ jobs:
 ## Publish to npmjs and GPR with npm
 ```yaml
 steps:
-- uses: actions/checkout@v6
-- uses: actions/setup-node@v6
+- uses: actions/checkout@v7
+- uses: actions/setup-node@v7
   with:
     node-version: '24.x'
     registry-url: 'https://registry.npmjs.org'
@@ -433,7 +433,7 @@ steps:
 - run: npm publish
   env:
     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-- uses: actions/setup-node@v6
+- uses: actions/setup-node@v7
   with:
     registry-url: 'https://npm.pkg.github.com'
     package-manager-cache: false # Disable automatic npm dependency caching to reduce cache poisoning risk
@@ -445,8 +445,8 @@ steps:
 ## Publish to npmjs and GPR with yarn
 ```yaml
 steps:
-- uses: actions/checkout@v6
-- uses: actions/setup-node@v6
+- uses: actions/checkout@v7
+- uses: actions/setup-node@v7
   with:
     node-version: '24.x'
     registry-url: <registry url>
@@ -455,7 +455,7 @@ steps:
 - run: yarn publish
   env:
     NODE_AUTH_TOKEN: ${{ secrets.YARN_TOKEN }}
-- uses: actions/setup-node@v6
+- uses: actions/setup-node@v7
   with:
     registry-url: 'https://npm.pkg.github.com'
     package-manager-cache: false # Disable automatic npm dependency caching to reduce cache poisoning risk
@@ -467,8 +467,8 @@ steps:
 ## Use private packages
 ```yaml
 steps:
-- uses: actions/checkout@v6
-- uses: actions/setup-node@v6
+- uses: actions/checkout@v7
+- uses: actions/setup-node@v7
   with:
     node-version: '24.x'
     registry-url: 'https://registry.npmjs.org'
@@ -488,8 +488,8 @@ Below you can find a sample "Setup .yarnrc.yml" step, that is going to allow you
 
 ```yaml
 steps:
-- uses: actions/checkout@v6
-- uses: actions/setup-node@v6
+- uses: actions/checkout@v7
+- uses: actions/setup-node@v7
   with:
     node-version: '24.x'
     package-manager-cache: false # Disable automatic npm dependency caching to reduce cache poisoning risk
@@ -533,9 +533,9 @@ You must also configure a **Trusted Publisher** in npm for your package/scope th
       id-token: write  # Required for OIDC
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
@@ -558,7 +558,7 @@ It is possible to specify a token to authenticate with the mirror using the `mir
 The token will be passed in the `Authorization` header.
 
 ```yaml
-- uses: actions/setup-node@v6
+- uses: actions/setup-node@v7
   with:
     node-version: '24.x'
     mirror: 'https://nodejs.org/dist'
