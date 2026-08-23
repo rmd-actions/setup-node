@@ -5,7 +5,7 @@ inputs:
   node-version:
     description: 'Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.'
   node-version-file:
-    description: 'File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.'
+    description: 'File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions, mise.toml.'
   architecture:
     description: 'Target architecture for Node to use. Examples: x86, x64. Will use system architecture by default.'
   check-latest:
@@ -34,6 +34,10 @@ inputs:
 outputs:
   cache-hit:
     description: 'A boolean value to indicate if a cache was hit.'
+  cache-primary-key:
+    description: 'The key used to restore and save the cache.'
+  cache-matched-key:
+    description: 'The key of the cache that was restored. Empty when no cache is found.'
   node-version:
     description: 'The installed node version.'
 runs:
